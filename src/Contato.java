@@ -27,4 +27,18 @@ public class Contato {
     public void setNumTelefone(Telefone numTelefone) {
         this.numTelefone = numTelefone;
     }
+
+    public static boolean nomeValido(String nome) {
+        return nome != null &&
+                nome.matches("[a-zA-ZÀ-ÿ ]+") &&
+                nome.length() > 3;
+    }
+
+    @Override
+    public String toString() {
+        return "Id: " + id +
+                " | Nome: " + nome +
+                " | Numero de Telefone: " + getNumTelefone();
+    }
+
 }

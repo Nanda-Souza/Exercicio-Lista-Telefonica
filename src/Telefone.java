@@ -9,4 +9,11 @@ public class Telefone {
         this.numTelefone = numTelefone;
     }
 
+    public static boolean numTelValido(String numTelefone) {
+        return numTelefone != null &&
+                numTelefone.matches("\\d+") &&
+                numTelefone.length() >= 9 &&
+                numTelefone.length() <= 14;
+    }
+
 }
