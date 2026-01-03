@@ -1,8 +1,8 @@
 public class Contato {
     private Integer id;
     private String nome;
-    private Telefone telCelular;
-    private Telefone telCasa;
+    private Telefone numTelefone;
+
 
     public int getId(){
         return id;
@@ -12,12 +12,8 @@ public class Contato {
         return nome;
     }
 
-    public String getTelCelular(){
-        return telCelular.getNumTelefone();
-    }
-
-    public String getTelCasa(){
-        return telCasa.getNumTelefone();
+    public String getNumTelefone(){
+        return numTelefone.getNumTelefone();
     }
 
     public void setId(Integer id) {
@@ -28,11 +24,7 @@ public class Contato {
         this.nome = nome;
     }
 
-    public void setTelCelular(Telefone telCelular) {
-        this.telCelular = telCelular;
-    }
-
-    public void setTelCasa(Telefone telCasa) {
-        this.telCasa = telCasa;
+    public void setNumTelefone(Telefone numTelefone) {
+        this.numTelefone = numTelefone;
     }
 }
