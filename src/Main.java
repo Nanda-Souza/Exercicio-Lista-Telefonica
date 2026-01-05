@@ -2,15 +2,20 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+    public static boolean inputValido(String input) {
+        return input != null &&
+                input.matches("^[12]$");
+    }
+
     public static boolean idValido(String id) {
         return id != null &&
                 id.matches("\\d+");
     }
 
-    public static boolean inicialValida(String id) {
-        return id != null &&
-                id.matches("^[A-Za-z]+$") &&
-                id.length() == 1;
+    public static boolean inicialValida(String inicial) {
+        return inicial != null &&
+                inicial.matches("^[A-Za-z]+$") &&
+                inicial.length() == 1;
     }
 
     public static void main(String[] args) {
@@ -21,6 +26,7 @@ public class Main {
         String nomeContato;
         String telefoneContato;
         boolean resultadoEncontrado;
+        boolean contatoEditado;
 
 
         //Lista de contatos
@@ -74,11 +80,97 @@ public class Main {
                     break;
 
                 case "2":
-                    System.out.println("Contato Editado");
+                    if (contatos.isEmpty()) {
+                        System.out.println("Para editar um contato é necessário cadastrar um contato primeiro!");
+                    } else {
+
+                        System.out.println("\nDigite o ID do Contato:");
+                        inputUsuario = scanner.nextLine().trim();
+
+                        while (!idValido(inputUsuario)){
+                            System.out.println("ID inválido, digite um ID válido para excluir o contato:");
+                            inputUsuario = scanner.nextLine().trim();
+                        }
+
+                        int idBusca = Integer.parseInt(inputUsuario);
+                        resultadoEncontrado = false;
+                        contatoEditado = false;
+
+                        for (Contato c: contatos){
+                            if (c.getId() == idBusca) {
+
+                                System.out.println("\nDeseja editar o nome do contato? ");
+                                System.out.println("1 - Sim");
+                                System.out.println("2 - Não");
+
+                                inputUsuario = scanner.nextLine().trim();
+
+                                while (!inputValido(inputUsuario)){
+                                    System.out.println("\nOpção inválida, digite 1 para sim e 2 para não:");
+                                    inputUsuario = scanner.nextLine().trim();
+                                }
+
+                                if (inputUsuario.equals("1")){
+                                    System.out.println("\nInsira um novo nome para o contato " + c.getNome() + ":");
+
+                                    nomeContato = scanner.nextLine().trim();
+
+                                    while (!Contato.nomeValido(nomeContato)){
+                                        System.out.println("Nome inválido. Digite novamente:");
+                                        nomeContato = scanner.nextLine().trim();
+                                    }
+
+                                    c.setNome(nomeContato);
+                                    contatoEditado = true;
+
+                                }
+
+                                System.out.println("\nDeseja editar o numero do contato? ");
+                                System.out.println("1 - Sim");
+                                System.out.println("2 - Não");
+
+                                inputUsuario = scanner.nextLine().trim();
+
+                                while (!inputValido(inputUsuario)){
+                                    System.out.println("\nOpção inválida, digite 1 para sim e 2 para não:");
+                                    inputUsuario = scanner.nextLine().trim();
+                                }
+
+                                if (inputUsuario.equals("1")){
+                                    System.out.println("\nInsira um novo numero para o contato " + c.getNome() + ":");
+
+                                    telefoneContato = scanner.nextLine().trim();
+
+                                    while (!Telefone.numTelValido(telefoneContato)){
+                                        System.out.println("Número inválido. Digite um numero de telefone valido com 9 até 14 digitos:");
+                                        telefoneContato = scanner.nextLine().trim();
+                                    }
+
+                                    Telefone novoTelefone = new Telefone();
+                                    novoTelefone.setNumTelefone(telefoneContato);
+                                    c.setNumTelefone(novoTelefone);
+                                    contatoEditado = true;
+
+
+                                }
+
+                                resultadoEncontrado = true;
+                                break;
+                            }
+                        }
+
+                        if (contatoEditado){
+                            System.out.println("Contato Editado!");
+                        } else if (resultadoEncontrado) {
+                            System.out.println("Nenhuma edição realizada!");
+                        } else {
+                            System.out.println("ID não encontrado!");
+                        }
+
+                    };
                     break;
 
                 case "3":
-                    System.out.println("Contatos Listados");
                     if (contatos.isEmpty()) {
                         System.out.println("Nenhum contato cadastrado. Favor cadastrar um contato!");
                     } else {
