@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Contato {
     private Integer id;
     private String nome;
@@ -32,6 +34,21 @@ public class Contato {
         return nome != null &&
                 nome.matches("[a-zA-ZÀ-ÿ ]+") &&
                 nome.length() >= 3;
+    }
+
+    public static ArrayList<Contato> listarContatoPorInicial(ArrayList<Contato> contatos, char letraInicial) {
+
+        ArrayList<Contato> listaResultado =  new ArrayList<>();
+
+        for (Contato c : contatos) {
+            if (c.getNome().toLowerCase().charAt(0) == letraInicial){
+                listaResultado.add(c);
+            }
+
+        }
+
+        return listaResultado;
+
     }
 
     @Override

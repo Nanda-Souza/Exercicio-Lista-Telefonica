@@ -7,6 +7,12 @@ public class Main {
                 id.matches("\\d+");
     }
 
+    public static boolean inicialValida(String id) {
+        return id != null &&
+                id.matches("^[A-Za-z]+$") &&
+                id.length() == 1;
+    }
+
     public static void main(String[] args) {
         //Variaveis de Controle
         Scanner scanner = new Scanner(System.in);
@@ -85,7 +91,33 @@ public class Main {
                     break;
 
                 case "4":
-                    System.out.println("Contatos Listados por Inicial");
+                    if (contatos.isEmpty()) {
+                        System.out.println("Nenhum contato cadastrado. Favor cadastrar um contato!");
+                    } else {
+                        System.out.println("\nFavor inserir a letra inicial dos contatos que deseja exibir: ");
+                        inputUsuario = scanner.nextLine().trim();
+
+                        while (!inicialValida(inputUsuario)){
+                            System.out.println("Letra inválida, digite apenas uma letra para realizar a busca por inicial!");
+                            inputUsuario = scanner.nextLine().trim();
+                        }
+
+                        char inicialEscolhida = inputUsuario.toLowerCase().charAt(0);
+                        ArrayList<Contato> listaPorInicial =  new ArrayList<>();
+
+                        listaPorInicial = Contato.listarContatoPorInicial(contatos, inicialEscolhida);
+
+                        if (listaPorInicial.isEmpty()){
+                            System.out.println("Nenhum contato encontrado para inicial " + inicialEscolhida + "!");
+                        } else {
+                            System.out.println("\nLista de Contatos pela inicial " + inicialEscolhida + ":");
+                            for (Contato c : listaPorInicial) {
+                                System.out.println(c);
+                            }
+                        }
+
+
+                    }
                     break;
 
                 case "5":
