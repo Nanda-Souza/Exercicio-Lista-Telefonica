@@ -2,6 +2,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+    public static boolean idValido(String id) {
+        return id != null &&
+                id.matches("\\d+");
+    }
+
     public static void main(String[] args) {
         //Variaveis de Controle
         Scanner scanner = new Scanner(System.in);
@@ -9,6 +14,7 @@ public class Main {
         int idContato = 1;
         String nomeContato;
         String telefoneContato;
+        boolean resultadoEncontrado;
 
 
         //Lista de contatos
@@ -23,7 +29,7 @@ public class Main {
             System.out.println("2 - Editar Contato");
             System.out.println("3 - Listar Contatos");
             System.out.println("4 - Buscar por Inicial");
-            System.out.println("5 - Deletar Constato");
+            System.out.println("5 - Deletar Contato");
             System.out.println("0 - Sair");
 
             inputUsuario = scanner.nextLine().trim();
@@ -68,7 +74,7 @@ public class Main {
                 case "3":
                     System.out.println("Contatos Listados");
                     if (contatos.isEmpty()) {
-                        System.out.println("Nenhum contato cadastrado.");
+                        System.out.println("Nenhum contato cadastrado. Favor cadastrar um contato!");
                     } else {
                         System.out.println("\nLista de Contatos:");
                         //Percorre a lista e imprime cada objeto pessoa
@@ -83,7 +89,40 @@ public class Main {
                     break;
 
                 case "5":
-                    System.out.println("Contato Deletado");
+                    if (contatos.isEmpty()) {
+                        System.out.println("Para deletar um contato é necessário cadastrar um contato primeiro!");
+                    } else {
+
+                        System.out.println("\nDigite o ID do Contato:");
+                        inputUsuario = scanner.nextLine().trim();
+
+                        while (!idValido(inputUsuario)){
+                            System.out.println("ID inválido, digite um ID válido para excluir o contato:");
+                            inputUsuario = scanner.nextLine().trim();
+                        }
+
+                        int idBusca = Integer.parseInt(inputUsuario);
+                        resultadoEncontrado = false;
+
+                        for (Contato c: contatos){
+                            if (c.getId() == idBusca) {
+                                resultadoEncontrado = true;
+                                break;
+                            }
+                        }
+
+                        if (resultadoEncontrado){
+                            contatos.removeIf(c -> c.getId() == idBusca);
+                            System.out.println("Contato Removido!");
+                        } else {
+                            System.out.println("ID não encontrado!");
+                        }
+
+
+
+
+
+                    }
                     break;
 
                 case "0":
